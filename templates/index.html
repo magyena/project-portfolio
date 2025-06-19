@@ -28,9 +28,6 @@
                     <a class="link" href="#portfolio">Portfolio</a>
                 </li>
                 <li class="item">
-                    <a class="link" href="#testmonial">Testmonial</a>
-                </li>
-                <li class="item">
                     <a class="link" href="#blog">Blog</a>
                 </li>
                 <li class="item">
@@ -58,7 +55,7 @@
             </h1>
             <p class="header-subtitle">Quality Enginner</p>            
 
-            <a href="{{ url_for('detail') }}" class="btn btn-primary">Visit My Works</a>
+            <a href="#portfolio" class="btn btn-primary">Visit My Works</a>
  
         </div>              
     </header><!-- end of page header -->
@@ -148,10 +145,6 @@ With extensive experience in creating and managing testing environments, I excel
     {% endfor %}
 </div>
 
-            <p class="section-subtitle">How Much I Charge ?</p>
-                        <h6 class="pricing-card-title">Free</h6>
-                        <div class="pricing-card-list">
-                    </div>
 <div class="text-center mt-3 mb-5">
     <button id="toggleBtn" class="btn btn-primary">Show More</button>
 </div>
@@ -160,12 +153,87 @@ With extensive experience in creating and managing testing environments, I excel
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
 
+     <div class="modal-header bg-gradient-primary text-white px-4 py-3">
   <div class="d-flex align-items-center">
+    <!-- Gambar Project -->
+    <img src="{{ url_for('static', filename='uploads/' ~ project.image) }}"
+         alt="{{ project.title }}"
+         class="mr-3"
+         style="height: 40px; width: auto; border-radius: 4px; background: #fff; padding: 2px;">
 
+    <!-- Judul dan Icon -->
+    <h5 class="modal-title font-weight-bold text-white m-0 d-flex align-items-center" id="projectModalLabel{{ project.id }}">
+      <i class="fas fa-folder-open mr-2"></i> {{ project.title }}
+    </h5>
+  </div>
+
+  <!-- Tombol Close -->
+  <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+      <!-- Body -->
+      <div class="modal-body bg-light p-4">
+        <div class="row">
+          <!-- Gambar -->
+          <div class="col-md-6 mb-4">
+            {% if project.detail_image %}
+              <img src="{{ url_for('static', filename='uploads/' ~ project.detail_image) }}"
+                   class="img-fluid rounded border shadow-sm w-100"
+                   alt="Detail {{ project.title }}">
+            {% else %}
+              <div class="d-flex align-items-center justify-content-center text-muted bg-white border rounded" style="height: 250px;">
+                <small>No Image Available</small>
+              </div>
+            {% endif %}
+          
+          </div>
+
+          <!-- Detail Text -->
+          <div class="col-md-6">
+            <div class="bg-white p-3 rounded shadow-sm mb-3">
+              <h6 class="text-primary font-weight-bold mb-2">Description</h6>
+              <p class="text-muted small text-left" style="text-align: justify;">
+                {{ project.full_description }}
+              </p>
             </div>
-        </div> 
-    </section> -->
 
+            <div class="bg-white p-3 rounded shadow-sm mb-3">
+              <h6 class="text-primary font-weight-bold mb-2">Technologies</h6>
+              <div class="d-flex flex-wrap">
+                {% for tech in project.technologies.split(',') %}
+                  <span class="badge badge-pill badge-info m-1 px-3 py-1">{{ tech.strip() }}</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="bg-white p-3 rounded shadow-sm">
+              <h6 class="text-primary font-weight-bold mb-2">Link</h6>
+              {% if project.github_link %}
+                <a href="{{ project.github_link }}" target="_blank" class="btn btn-dark btn-sm mr-2 mb-2">
+                  <i class="fab fa-github mr-1"></i> GitHub
+                </a>
+              {% endif %}
+              {% if project.live_demo_link %}
+                <a href="{{ project.live_demo_link }}" target="_blank" class="btn btn-success btn-sm mb-2">
+                  <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer bg-white px-4 py-3">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endfor %}
+           </div>
     <!-- section -->
     <section class="section-sm bg-primary">
         <!-- container -->
@@ -187,7 +255,7 @@ With extensive experience in creating and managing testing environments, I excel
         <!-- container -->
         <div class="container text-center">
             <p class="section-subtitle">Recent Posts?</p>
-            <h6 class="section-title mb-6">Blog</h6>
+            <h6 class="section-title mb-6">Blog Update</h6>
             <!-- blog-wrapper -->
             <div class="blog-card">
                 <div class="blog-card-header">
@@ -271,17 +339,13 @@ With extensive experience in creating and managing testing environments, I excel
                 <a href="javascript:void(0)" class="link"><i class="ti-rss"></i></a>
             </div>
         </footer>
-    </div> <!-- end of page footer -->
-	
-	<!-- core  -->
+    </div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/kQkmw2a/GwH8lqH6Xb+Xp1rI6J6nJz" crossorigin="anonymous"></script>
     <script src="static/vendors/jquery/jquery-3.4.1.js"></script>
     <script src="static/vendors/bootstrap/bootstrap.bundle.js"></script>
-
-    <!-- bootstrap 3 affix -->
 	<script src="static/vendors/bootstrap/bootstrap.affix.js"></script>
-
-    <!-- Meyawo js -->
     <script src="static/js/meyawo.js"></script>
-
+    <script src="static/js/index.js"></script>
 </body>
 </html>
