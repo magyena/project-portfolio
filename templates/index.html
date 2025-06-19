@@ -130,132 +130,37 @@ With extensive experience in creating and managing testing environments, I excel
             <p class="section-subtitle">What I Did ?</p>
             <h6 class="section-title mb-6">Portfolio</h6>
             <!-- row -->
-            <div class="row">
-                <div class="col-md-4">
-                    <a  class="portfolio-card img-responsive rounded">
-                        <img src="static/imgs/him.png " class="portfolio-card-img" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">    
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                               <h4>Automation Android Environment</h4>
-                                    <p class="font-weight-normal"style="text-align: left; margin-left: 20px;">Category: Automation Testcase Android</p>
-                                    <p class="font-weight-normal" style="text-align: left; margin-left: 20px;">Tools:</p>
-                                    <ul class="font-weight-normal">
-                                        <li>Appium</li>
-                                        <li>Pytest</li>
-                                        <li>Discord</li>
-                                    </ul>
-                            </span>                         
-                        </span>                     
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a  class="portfolio-card">
-                        <img class="portfolio-card-img img-responsive rounded" src="static/imgs/him2.png" class="img-responsive rounded" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>Automation IOS Environment</h4>
-                                        <p class="font-weight-normal"style="text-align: left; margin-left: 20px;">Category: Automation Testcase IOS</p>
-                                        <p class="font-weight-normal" style="text-align: left; margin-left: 20px;">Tools:</p>
-                                    <ul class="font-weight-normal">
-                                        <li>Appium</li>
-                                        <li>Pytest</li>
-                                        <li>Discord</li>
-                                    </ul>
-                            </span>                         
-                        </span>                         
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a  class="portfolio-card">
-                        <img class="portfolio-card-img img-responsive rounded" src="static/imgs/laptop0.png" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" width="100" height="280" style="margin-top: -20px;">>
-                        <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>Website Development</h4>
-                                    <p class="font-weight-normal"style="text-align: left; margin-left: 20px;">Category: Website Development</p>
-                                    <p class="font-weight-normal" style="text-align: left; margin-left: 20px;">Tools:</p>
-                                    <ul class="font-weight-normal">
-                                        <li>Python</li>
-                                        <li>HTML</li>
-                                        <li>CSS</li>
-                                    </ul>
-                            </span>                         
-                        </span>                     
-                    </a>
-                </div>
-            </div><!-- end of row -->
-        </div><!-- end of container -->
-    </section> <!-- end of portfolio section -->
+           <div class="row">
+   <div class="row justify-content-start" id="projectContainer">
+    {% for project in projects %}
+    <div class="col-md-4 mb-4 project-item {% if loop.index > 3 %}d-none{% endif %}">
+        <div class="card portfolio-card-custom">
+            <img class="card-img-top project-image" src="{{ url_for('static', filename='uploads/' ~ project.image) }}" alt="{{ project.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ project.title }}</h5>
+                <p class="card-text">{{ project.short_description }}</p>
+                <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#projectModal{{ project.id }}">
+                    Details
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
-    <!-- pricing section -->
-    <!-- <section class="section" id="pricing">
-        <div class="container text-center">
             <p class="section-subtitle">How Much I Charge ?</p>
-            <h6 class="section-title mb-6">My Pricing</h6>
-            
-            <div class="pricing-wrapper">
-                <div class="pricing-card">
-                    <div class="pricing-card-header">
-                        <img class="pricing-card-icon" src="static/imgs/scooter.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
-                    </div>
-                    <div class="pricing-card-body">
                         <h6 class="pricing-card-title">Free</h6>
                         <div class="pricing-card-list">
-                            <p>accusamus reprehenderit</p>
-                            <p>provident dolorem </p>
-                            <p>quos neque</p>
-                            <p>fugiat quibusdam</p>
-                            <p><i class="ti-close"></i></p>
-                            <p><i class="ti-close"></i></p>
-                        </div>
                     </div>
-                    <div class="pricing-card-footer">
-                        <span>$</span>
-                        <span>0.00/Month</span>
-                    </div>
-                    <a href="#" class="btn btn-primary mt-3 pricing-card-btn">Subscribe</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="pricing-card-header">
-                        <img class="pricing-card-icon" src="static/imgs/shipped.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
-                    </div>
-                    <div class="pricing-card-body">
-                        <h6 class="pricing-card-title">Basic</h6>
-                        <div class="pricing-card-list">
-                            <p>accusamus reprehenderit</p>
-                            <p>provident dolorem </p>
-                            <p>quos neque</p>
-                            <p>fugiat quibusdam</p>
-                            <p>accusamus laboriosam</p>
-                            <p><i class="ti-close"></i></p>
-                        </div>
-                    </div>
-                    <div class="pricing-card-footer">
-                        <span>$</span>
-                        <span>9.99/Month</span>
-                    </div>
-                    <a href="#" class="btn btn-primary mt-3 pricing-card-btn">Subscribe</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="pricing-card-header">
-                        <img class="pricing-card-icon" src="static/imgs/startup.svg" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
-                    </div>
-                    <div class="pricing-card-body">
-                        <h6 class="pricing-card-title">Premium</h6>
-                        <div class="pricing-card-list">
-                            <p>accusamus reprehenderit</p>
-                            <p>provident dolorem </p>
-                            <p>quos neque</p>
-                            <p>fugiat quibusdam</p>
-                            <p>accusamus laboriosam</p>
-                            <p>inventore omnis</p>
-                        </div>
-                    </div>
-                    <div class="pricing-card-footer">
-                        <span>$</span>
-                        <span>99.9/Month</span>
-                    </div>
-                    <a href="#" class="btn btn-primary mt-3 pricing-card-btn">Subscribe</a>
-                </div>
+<div class="text-center mt-3 mb-5">
+    <button id="toggleBtn" class="btn btn-primary">Show More</button>
+</div>
+{% for project in projects %}
+<div class="modal fade" id="projectModal{{ project.id }}" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel{{ project.id }}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+  <div class="d-flex align-items-center">
 
             </div>
         </div> 

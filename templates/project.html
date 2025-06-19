@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Project</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 30px;
+            margin: 60px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .form-check {
+            margin-top: 10px;
+        }
+
+        .form-check label {
+            display: inline-block;
+            font-weight: normal;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #3498db;
+            border: none;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #555;
+        }
+
+        .back-link:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Tambah Project</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="title">Judul</label>
+        <input type="text" name="title" required>
+
+        <label for="image">Upload Gambar</label>
+        <input type="file" name="image" accept="image/*">
+
+         <label for="detail_image">Gambar Detail Aplikasi</label>
+        <input type="file" name="detail_image" accept="image/*">
+
+        <label for="short_description">Short Description</label>
+        <textarea name="short_description" required></textarea>
+
+        <label for="full_description">Full Description</label>
+        <textarea name="full_description"></textarea>
+
+        <label for="technologies">Technologies</label>
+        <input type="text" name="technologies">
+
+        <label for="github_link">GitHub Link</label>
+        <input type="url" name="github_link">
+
+        <label for="live_demo_link">Live Demo Link</label>
+        <input type="url" name="live_demo_link">
+
+        <div class="form-check">
+            <input type="checkbox" name="is_featured" id="is_featured">
+            <label for="is_featured">Featured</label>
+        </div>
+
+        <button type="submit">Simpan Project</button>
+    </form>
+    <a class="back-link" href="/">← Kembali ke Beranda</a>
+</div>
+
+</body>
+</html>

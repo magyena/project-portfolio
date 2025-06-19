@@ -2968,7 +2968,6 @@ fieldset:disabled a.btn {
   background-color: #f8f9fa;
   border-color: #f8f9fa;
 }
-
 .btn-light:hover {
   color: #212529;
   background-color: #e2e6ea;
@@ -12220,4 +12219,126 @@ pre .code {
 
 .section-lg {
   padding: 100px 0 !important;
+}
+/* Custom CSS untuk Kartu Portofolio */
+.portfolio-card-custom {
+    /* Pastikan tidak ada border yang terlalu kuat yang menghilangkan efek bayangan */
+    border: 1px solid rgba(0,0,0,0.05); /* Border sangat tipis dan transparan untuk transisi yang halus */
+    border-radius: 10px;
+    overflow: hidden;
+    /* Kunci utamanya ada di sini: box-shadow awal yang lebih kuat */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* Bayangan yang lebih jelas dan "muncul" */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    background-color: #fff; /* Pastikan background kartu putih (default card Bootstrap) */
+}
+
+.portfolio-card-custom:hover {
+    transform: translateY(-5px); /* Tetap berikan efek angkat saat di-hover */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25); /* Bayangan lebih intens saat di-hover */
+    border-color: #007bff; /* Opsional: border berubah warna saat di-hover */
+}
+
+/* Properti lain yang sudah ada */
+.portfolio-card-custom .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee; /* Garis tipis di bawah gambar */
+    position: relative; /* Untuk efek overlay gambar */
+    overflow: hidden; /* Untuk efek overlay gambar */
+}
+
+.portfolio-card-custom .card-img-top::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 123, 255, 0.1); 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.portfolio-card-custom:hover .card-img-top::after {
+    opacity: 1;
+}
+
+.portfolio-card-custom .card-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.portfolio-card-custom .card-title {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.portfolio-card-custom .card-text {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.portfolio-card-custom .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.portfolio-card-custom .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.portfolio-card-custom .card-img-top {
+    position: relative;
+    overflow: hidden;
+}
+.portfolio-card-custom .card-img-top::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 123, 255, 0.2); 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.portfolio-card-custom:hover .card-img-top::after {
+    opacity: 10;
+}
+
+.hidden-portfolio-item {
+    display: none; 
+}
+.hidden-portfolio-item.show-item {
+    display: block;    
+}
+.hidden-portfolio-item {
+    display: none;    
+}
+.hidden-portfolio-item.show-item {
+    display: block; 
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #695aa6, #695aa6);
+}
+.modal-content {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #000;
+}
+.badge-info {
+  background-color: #17a2b8;
+  font-size: 0.75rem;
+}
+.modal-body h6 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+.shadow-sm {
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.05) !important;
 }
