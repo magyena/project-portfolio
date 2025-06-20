@@ -122,50 +122,48 @@ With extensive experience in creating and managing testing environments, I excel
     </section><!-- end of service section -->
 
     <!-- portfolio section -->
-    <section class="section" id="portfolio">
-        <div class="container text-center">
-            <p class="section-subtitle">What I Did ?</p>
-            <h6 class="section-title mb-6">Portfolio</h6>
-            <!-- row -->
-           <div class="row">
-   <div class="row justify-content-start" id="projectContainer">
-    {% for project in projects %}
-    <div class="col-md-4 mb-4 project-item {% if loop.index > 3 %}d-none{% endif %}">
-        <div class="card portfolio-card-custom">
-            <img class="card-img-top project-image" src="{{ url_for('static', filename='uploads/' ~ project.image) }}" alt="{{ project.title }}">
+   <section class="section" id="portfolio">
+  <div class="container text-center">
+    <p class="section-subtitle">What I Did ?</p>
+    <h6 class="section-title mb-6">Portfolio</h6>
+
+    <div class="row">
+      <div class="row justify-content-start" id="projectContainer">
+        {% for project in projects %}
+        <div class="col-md-4 mb-4 project-item {% if loop.index > 3 %}d-none{% endif %}">
+          <div class="card portfolio-card-custom">
+            <img class="card-img-top project-image"
+              src="{{ url_for('static', filename='uploads/' ~ project.image) }}"
+              alt="{{ project.title }}">
             <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
-                <p class="card-text">{{ project.short_description }}</p>
-                {% set current_progress = project.progress %}
+              <h5 class="card-title">{{ project.title }}</h5>
+              <p class="card-text">{{ project.short_description }}</p>
 
-                <div class="mb-2">
-  <small>{{ current_progress }}% complete</small>
-  <div class="progress">
-    <div class="progress-bar
-        {% if current_progress == 100 %}
-            bg-success
-        {% elif current_progress >= 50 %}
-            bg-info
-        {% else %}
-            bg-warning
-        {% endif %}"
-        role="progressbar"
-        style="width: {{ current_progress }}%;"
-        aria-valuenow="{{ current_progress }}"
-        aria-valuemin="0"
-        aria-valuemax="100">
-    </div>
-  </div>
-</div>
+              {% set current_progress = project.progress %}
 
-
-                <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#projectModal{{ project.id }}">
-                    Details
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <button type="button" class="btn btn-outline-primary btn-sm"
+                  data-toggle="modal"
+                  data-target="#projectModal{{ project.id }}">
+                  Details
                 </button>
+
+                <div class="progress-circle text-white d-flex align-items-center justify-content-center
+                    {% if current_progress == 100 %}
+                        bg-success
+                    {% elif current_progress >= 50 %}
+                        bg-info
+                    {% else %}
+                        bg-warning
+                    {% endif %}">
+                  <small>{{ current_progress }}%</small>
+                </div>
+              </div>
+
             </div>
+          </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
 </div>
 
 <div class="text-center mt-3 mb-5">

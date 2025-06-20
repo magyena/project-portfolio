@@ -12364,3 +12364,12 @@ pre .code {
   transition: stroke-dashoffset 0.5s ease;
 }
 
+.progress-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size:1rem;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+}
