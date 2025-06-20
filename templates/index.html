@@ -136,6 +136,29 @@ With extensive experience in creating and managing testing environments, I excel
             <div class="card-body">
                 <h5 class="card-title">{{ project.title }}</h5>
                 <p class="card-text">{{ project.short_description }}</p>
+                {% set current_progress = project.progress %}
+
+                <div class="mb-2">
+  <small>{{ current_progress }}% complete</small>
+  <div class="progress">
+    <div class="progress-bar
+        {% if current_progress == 100 %}
+            bg-success
+        {% elif current_progress >= 50 %}
+            bg-info
+        {% else %}
+            bg-warning
+        {% endif %}"
+        role="progressbar"
+        style="width: {{ current_progress }}%;"
+        aria-valuenow="{{ current_progress }}"
+        aria-valuemin="0"
+        aria-valuemax="100">
+    </div>
+  </div>
+</div>
+
+
                 <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#projectModal{{ project.id }}">
                     Details
                 </button>
@@ -206,6 +229,14 @@ With extensive experience in creating and managing testing environments, I excel
                 {% endfor %}
               </div>
             </div>
+            <div class="bg-white p-3 rounded shadow-sm mb-3">
+            <h6 class="text-primary font-weight-bold mb-2">Jobdesk</h6>
+<p class="text-muted small" style="text-align: justify;">
+  {{ project.jobdesk }}
+</p>
+
+</div>
+
 
             <div class="bg-white p-3 rounded shadow-sm">
               <h6 class="text-primary font-weight-bold mb-2">Link</h6>

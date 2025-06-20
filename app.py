@@ -39,12 +39,16 @@ def get_projects():
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
+
     cur.execute("SELECT * FROM projects ORDER BY id DESC")
-    rows = cur.fetchall()
-    column_names = [desc[0] for desc in cur.description]
-    projects = [dict(zip(column_names, row)) for row in rows]
+    project_rows = cur.fetchall()
+    project_cols = [desc[0] for desc in cur.description]
+
+    projects = [dict(zip(project_cols, row)) for row in project_rows]
+
     cur.close()
     conn.close()
+
     return render_template("index.html", projects=projects)
 
 
@@ -64,6 +68,10 @@ def add():
         live_demo_link = request.form["live_demo_link"]
         is_featured = request.form.get("is_featured") == "on"
 
+        # ✅ Tambahan baru
+        progress = int(request.form.get("progress", 0))  # Default ke 0 kalau kosong
+        jobdesk = request.form.get("jobdesk", "").strip()
+
         # Gambar utama
         file = request.files["image"]
         if file and file.filename != "":
@@ -82,7 +90,7 @@ def add():
             )
             detail_file.save(detail_image_path)
         else:
-            detail_filename = None  # atau default jika mau
+            detail_filename = None  # atau default jika ada
 
         conn = get_db_connection()
         cur = conn.cursor()
@@ -91,8 +99,8 @@ def add():
             INSERT INTO projects (
                 title, image, detail_image, short_description, 
                 full_description, technologies, github_link, 
-                live_demo_link, is_featured
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                live_demo_link, is_featured, progress, jobdesk
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
                 title,
@@ -104,6 +112,8 @@ def add():
                 github_link,
                 live_demo_link,
                 is_featured,
+                progress,
+                jobdesk,
             ),
         )
         conn.commit()
@@ -113,5 +123,8 @@ def add():
     return render_template("project.html")
 
 
+# if __name__ == "__main__":
+#     app.run(debug=False)
+
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(host="0.0.0.0", port=5000, debug=True)

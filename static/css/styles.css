@@ -12342,3 +12342,25 @@ pre .code {
 .shadow-sm {
   box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.05) !important;
 }
+
+
+.circular-progress-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.circular-progress {
+  transform: rotate(-90deg);
+}
+
+.circular-progress .bg {
+  fill: none;
+  stroke: #e6e6e6;
+}
+
+.circular-progress .progress {
+  fill: none;
+  stroke: #4caf50; /* default green */
+  transition: stroke-dashoffset 0.5s ease;
+}
+
