@@ -1,0 +1,71 @@
+<div class="max-w-2xl bg-white p-6 rounded-xl shadow-md mx-auto">
+  <h2 class="text-2xl font-semibold text-center text-blue-800 mb-6">Tambah Project</h2>
+<form method="POST" action="/add" enctype="multipart/form-data" class="space-y-5">
+    <div>
+      <label for="title" class="block font-medium text-gray-700">Judul</label>
+      <input type="text" name="title" class="w-full mt-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+    </div>
+
+    <div>
+      <label for="image" class="block font-medium text-gray-700">Upload Gambar</label>
+      <input type="file" name="image" accept="image/*" class="w-full mt-1">
+    </div>
+
+    <div>
+      <label for="detail_image" class="block font-medium text-gray-700">Gambar Detail Aplikasi</label>
+      <input type="file" name="detail_image" accept="image/*" class="w-full mt-1">
+    </div>
+
+    <div>
+      <label for="short_description" class="block font-medium text-gray-700">Short Description</label>
+      <textarea name="short_description" required class="w-full mt-1 border border-gray-300 rounded-md px-4 py-2 h-24 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+    </div>
+
+    <div>
+      <label for="full_description" class="block font-medium text-gray-700">Full Description</label>
+      <textarea name="full_description" class="w-full mt-1 border border-gray-300 rounded-md px-4 py-2 h-28 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+    </div>
+
+    <div>
+      <label for="technologies" class="block font-medium text-gray-700">Technologies</label>
+      <input type="text" name="technologies" class="w-full mt-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+
+    <div>
+      <label for="github_link" class="block font-medium text-gray-700">GitHub Link</label>
+      <input type="url" name="github_link" class="w-full mt-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+
+    <div>
+      <label for="live_demo_link" class="block font-medium text-gray-700">Live Demo Link</label>
+      <input type="url" name="live_demo_link" class="w-full mt-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+
+    <div>
+      <label for="progress" class="block font-medium text-gray-700">Progress (%)</label>
+      <select name="progress" required class="w-full mt-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="">-- Pilih Progress --</option>
+        <option value="25">25%</option>
+        <option value="50">50%</option>
+        <option value="75">75%</option>
+        <option value="100">100%</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="jobdesk" class="block font-medium text-gray-700">Jobdesk</label>
+      <input type="text" name="jobdesk" placeholder="Contoh: Frontend, Backend, UI/UX Designer" class="w-full mt-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+
+    <div class="flex items-center space-x-2">
+      <input type="checkbox" name="is_featured" id="is_featured" class="form-checkbox">
+      <label for="is_featured" class="text-gray-700">Featured</label>
+    </div>
+
+    <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition">Simpan Project</button>
+  </form>
+
+  <div class="text-center mt-6">
+    <a href="/cms" class="text-blue-600 hover:underline">← Kembali ke Beranda</a>
+  </div>
+</div>

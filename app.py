@@ -40,7 +40,7 @@ def index():
     conn = get_db_connection()
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM projects ORDER BY id DESC")
+    cur.execute("SELECT * FROM projects ORDER BY progress ASC")
     project_rows = cur.fetchall()
     project_cols = [desc[0] for desc in cur.description]
 
@@ -119,8 +119,18 @@ def add():
         conn.commit()
         cur.close()
         conn.close()
-        return redirect("/")
-    return render_template("project.html")
+        return redirect("/cms")
+    return render_template("add_fragment.html")
+
+
+@app.route("/cms")
+def cms():
+    return render_template("cms.html")
+
+
+@app.route("/add-fragment")
+def add_fragment():
+    return render_template("add_fragment.html")
 
 
 # if __name__ == "__main__":
