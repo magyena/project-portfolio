@@ -133,6 +133,23 @@ def add_fragment():
     return render_template("add_fragment.html")
 
 
+@app.route("/add-blog-fragment", methods=["GET", "POST"])
+def add_blog_fragment():
+    if request.method == "POST":
+        title = request.form["title"]
+        author = request.form["author"]
+        description = request.form["description"]
+        image = request.files["image"]
+
+        if image:
+            filename = secure_filename(image.filename)
+            image_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            image.save(image_path)
+
+        return redirect("/cms")
+    return render_template("add_blog.html")
+
+
 # if __name__ == "__main__":
 #     app.run(debug=False)
 

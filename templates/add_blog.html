@@ -1,0 +1,38 @@
+<div class="max-w-2xl bg-white p-6 rounded-xl shadow-md mx-auto">
+  <form action="/add-blog-fragment" method="POST" enctype="multipart/form-data" class="space-y-4">
+    <h2 class="text-2xl font-semibold mb-4">Tambah Blog Post</h2>
+
+    <!-- Judul -->
+    <div>
+      <label for="title" class="block font-medium">Judul</label>
+      <input type="text" id="title" name="title" required class="w-full p-2 border rounded" placeholder="Masukkan judul blog">
+    </div>
+
+    <!-- Author -->
+    <div>
+      <label for="author" class="block font-medium">Author</label>
+      <select id="author" name="author" required class="w-full p-2 border rounded">
+        <option value="">-- Pilih Author --</option>
+        <option value="Admin">Admin</option>
+        <option value="Fatah">Fatah</option>
+      </select>
+    </div>
+
+    <!-- Deskripsi -->
+    <div>
+      <label for="description" class="block font-medium">Deskripsi</label>
+      <textarea id="description" name="description" rows="6" required class="w-full p-2 border rounded" placeholder="Masukkan deskripsi blog"></textarea>
+    </div>
+
+    <!-- Gambar -->
+    <div>
+      <label for="image" class="block font-medium">Gambar</label>
+      <input type="file" id="image" name="image" accept="image/*" required class="w-full p-2 border rounded">
+    </div>
+
+    <!-- Tombol Submit -->
+    <div class="text-right">
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
+    </div>
+  </form>
+</div>
