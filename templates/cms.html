@@ -43,14 +43,47 @@
       </nav>
     </aside>
 
-    <main class="flex-1 p-6 md:p-10">
-      <div class="mb-8">
-        <h1 class="text-4xl mb-2 text-blue-800">Dashboard</h1>
-        <p class="text-gray-600">Manage your content from the sidebar.</p>
+   <main class="flex-1 p-6 md:p-10">
+  <!-- Kontainer untuk dashboard dan dynamic content -->
+  <div id="dashboard-section">
+    <div class="mb-8">
+      <h1 class="text-4xl mb-2 text-blue-800">Dashboard</h1>
+      <p class="text-gray-600">Manage your content from the sidebar.</p>
+    </div>
+
+    <!-- Statistik Box -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <div class="bg-white p-6 rounded-xl shadow-md border text-center">
+        <p class="text-gray-500">Total Project</p>
+        <h2 id="total-project" class="text-3xl font-bold text-blue-700 mt-1">...</h2>
       </div>
-      <div id="dynamic-content" class="bg-white p-6 rounded-xl shadow-md border prose prose-blue max-w-none text-base text-gray-800"></div>
-    </main>
+      <div class="bg-white p-6 rounded-xl shadow-md border text-center">
+        <p class="text-gray-500">Total Blog</p>
+        <h2 id="total-blog" class="text-3xl font-bold text-green-600 mt-1">...</h2>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md border text-center">
+        <p class="text-gray-500">Total Komentar</p>
+        <h2 id="total-komentar" class="text-3xl font-bold text-pink-600 mt-1">...</h2>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md border text-center">
+        <p class="text-gray-500">Total Kunjungan</p>
+        <h2 id="total-kunjungan" class="text-3xl font-bold text-yellow-500 mt-1">...</h2>
+      </div>
+    </div>
+
+    <!-- Project Terbaru -->
+    <div class="bg-white p-6 rounded-xl shadow-md border mb-10">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4">Project Terbaru</h3>
+      <div id="latest-projects">
+        <p class="text-gray-500 italic">Memuat data...</p>
+      </div>
+    </div>
   </div>
+
+  <!-- Dynamic content (form, blog, dll) -->
+  <div id="dynamic-content" class="hidden bg-white p-6 rounded-xl shadow-md border prose prose-blue max-w-none text-base text-gray-800"></div>
+</main>
+
 
   <script>
     function setActiveLink(activeId) {
@@ -64,25 +97,34 @@
     }
 
     function loadForm(url) {
-      fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const temp = document.createElement("div");
-          temp.innerHTML = html;
-          temp.querySelectorAll("style").forEach(style => style.remove());
-          const bodyContent = temp.querySelector("body") || temp;
-          document.getElementById("dynamic-content").innerHTML = bodyContent.innerHTML;
-          if (url.includes('add-blog')) {
-            setActiveLink('menu-blog');
-          } else {
-            setActiveLink('menu-project');
-          }
-        })
-        .catch(err => {
-          document.getElementById("dynamic-content").innerHTML = "<p class='text-red-600'>Gagal memuat konten.</p>";
-          console.error(err);
-        });
-    }
+  fetch(url)
+    .then(res => res.text())
+    .then(html => {
+      const temp = document.createElement("div");
+      temp.innerHTML = html;
+      temp.querySelectorAll("style").forEach(style => style.remove());
+      const bodyContent = temp.querySelector("body") || temp;
+
+      // Tampilkan fragment
+      document.getElementById("dynamic-content").innerHTML = bodyContent.innerHTML;
+      document.getElementById("dynamic-content").classList.remove("hidden");
+
+      // Sembunyikan dashboard
+      document.getElementById("dashboard-section").style.display = "none";
+
+      // Highlight menu aktif
+      if (url.includes('add-blog')) {
+        setActiveLink('menu-blog');
+      } else {
+        setActiveLink('menu-project');
+      }
+    })
+    .catch(err => {
+      document.getElementById("dynamic-content").innerHTML = "<p class='text-red-600'>Gagal memuat konten.</p>";
+      console.error(err);
+    });
+}
+
   </script>
 
 </body>
