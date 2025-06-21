@@ -21,29 +21,40 @@
       font-size: 1rem;
       color: #1f2937;
     }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Sembunyikan scrollbar di Firefox */
+    .no-scrollbar {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
   </style>
 </head>
-<body class="bg-gray-100 text-gray-800 text-base">
+<body class="bg-gray-100 text-gray-800 text-base h-screen overflow-hidden">
 
-  <div class="flex min-h-screen">
-    <aside class="w-64 bg-white border-r hidden md:flex flex-col">
-      <div class="p-6 border-b">
-        <a href="/cms" class="flex items-center space-x-3">
-          <img src="static/imgs/home.png" alt="MyCMS Logo" class="w-8 h-8">
-          <span class="text-2xl text-blue-700">MyCMS</span>
-        </a>
-      </div>
-      <nav class="flex-1 p-4 space-y-2">
-        <button onclick="loadForm('/add-fragment')" id="menu-project" class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition">
-          ➕ Add Project
-        </button>
-        <button onclick="loadForm('/add-blog-fragment')" id="menu-blog" class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition">
-          📝 Add Blog
-        </button>
-      </nav>
-    </aside>
+  <!-- Sidebar -->
+  <aside class="fixed top-0 left-0 h-screen w-64 bg-white border-r hidden md:flex flex-col z-10">
+    <div class="p-6 border-b">
+      <a href="/cms" class="flex items-center space-x-3">
+        <img src="static/imgs/home.png" alt="MyCMS Logo" class="w-8 h-8">
+        <span class="text-2xl text-blue-700">MyCMS</span>
+      </a>
+    </div>
+    <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+      <button onclick="loadForm('/add-fragment')" id="menu-project" class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition">
+        ➕ Add Project
+      </button>
+      <button onclick="loadForm('/add-blog-fragment')" id="menu-blog" class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition">
+        📝 Add Blog
+      </button>
+    </nav>
+  </aside>
 
-   <main class="flex-1 p-6 md:p-10">
+   <main class="ml-0 md:ml-64 h-screen overflow-hidden">
+    <div class="h-full overflow-y-auto no-scrollbar p-6 md:p-10">
+  
   <!-- Kontainer untuk dashboard dan dynamic content -->
   <div id="dashboard-section">
     <div class="mb-8">
@@ -77,6 +88,7 @@
       <div id="latest-projects">
         <p class="text-gray-500 italic">Memuat data...</p>
       </div>
+      
     </div>
   </div>
 
