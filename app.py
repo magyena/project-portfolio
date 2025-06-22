@@ -1,6 +1,9 @@
+from datetime import datetime
+import uuid
 from flask import Flask, redirect, render_template, jsonify, request
 import psycopg2
 import os
+import supabase
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -13,6 +16,10 @@ database = "postgres"
 port = "6543"
 username = "postgres.wznglqsbzzejpfwhesmw"
 password = "M@langPost11"
+SUPABASE_URL = "https://wznglqsbzzejpfwhesmw.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind6bmdscXNienplanBmd2hlc213Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczMDE5MDM3NCwiZXhwIjoyMDQ1NzY2Mzc0fQ.WpVubAEG_EQRxuVFp33IlKWtZUDFFIq6tpUliNolG6g"
+
+supabase = supabase.create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
 def get_db_connection():
@@ -37,19 +44,28 @@ def get_projects():
 
 @app.route("/")
 def index():
+    # Ambil data dari PostgreSQL
     conn = get_db_connection()
     cur = conn.cursor()
-
     cur.execute("SELECT * FROM projects ORDER BY progress ASC")
     project_rows = cur.fetchall()
     project_cols = [desc[0] for desc in cur.description]
-
     projects = [dict(zip(project_cols, row)) for row in project_rows]
-
     cur.close()
     conn.close()
 
-    return render_template("index.html", projects=projects)
+    response = (
+        supabase.table("blog_posts")
+        .select("*")
+        .order("id", desc=True)
+        .limit(5)
+        .execute()
+    )
+    blogs = response.data
+    for blog in blogs:
+        if isinstance(blog.get("created_at"), str):
+            blog["created_at"] = datetime.fromisoformat(blog["created_at"])
+    return render_template("index.html", projects=projects, blogs=blogs)
 
 
 @app.route("/detail")
@@ -141,17 +157,39 @@ def add_blog_fragment():
         description = request.form["description"]
         image = request.files["image"]
 
-        if image:
-            filename = secure_filename(image.filename)
-            image_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-            image.save(image_path)
+        image_url = None
 
-        return redirect("/cms")
+        if image:
+            filename = f"{uuid.uuid4()}_{secure_filename(image.filename)}"
+            file_bytes = image.read()
+
+            upload_response = supabase.storage.from_("gambar").upload(
+                path=f"uploads/{filename}",
+                file=file_bytes,
+                file_options={"content-type": image.mimetype},
+            )
+
+            if upload_response:
+                image_url = supabase.storage.from_("gambar").get_public_url(
+                    f"uploads/{filename}"
+                )
+
+                supabase.table("blog_posts").insert(
+                    {
+                        "title": title,
+                        "author": author,
+                        "description": description,
+                        "image_url": image_url,
+                    }
+                ).execute()
+
+                return redirect("/cms")
+
     return render_template("add_blog.html")
 
 
-# if __name__ == "__main__":
-#     app.run(debug=False)
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=False)
+
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=5000, debug=True)
