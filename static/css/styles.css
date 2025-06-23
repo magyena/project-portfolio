@@ -12386,3 +12386,19 @@ pre .code {
 .animate-fade-in-up {
   animation: fadeInUp 0.8s ease-out forwards;
 }
+.status-badge {
+  position: absolute;
+  top: -20px;
+  right: 10px;
+  width: 60px;
+  height: 70px;
+  z-index: 10;
+}
+.done-badge {
+  position: absolute;
+  top: -12px;
+  right: 10px;
+  width: 50px;
+  height: 55px;
+  z-index: 10;
+}

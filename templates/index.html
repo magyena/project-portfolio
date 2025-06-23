@@ -120,9 +120,7 @@ With extensive experience in creating and managing testing environments, I excel
                     </div>
                 </div>
                 
-    </section><!-- end of service section -->
-
-    <!-- portfolio section -->
+    </section>
    <section class="section" id="portfolio">
   <div class="container text-center">
     <p class="section-subtitle">What I Did ?</p>
@@ -133,9 +131,26 @@ With extensive experience in creating and managing testing environments, I excel
         {% for project in projects %}
         <div class="col-md-4 mb-4 project-item {% if loop.index > 3 %}d-none{% endif %}">
           <div class="card portfolio-card-custom">
-            <img class="card-img-top project-image"
-              src="{{ url_for('static', filename='uploads/' ~ project.image) }}"
-              alt="{{ project.title }}">
+            <div class="position-relative">
+  <img class="card-img-top project-image"
+       src="{{ url_for('static', filename='uploads/' ~ project.image) }}"
+       alt="{{ project.title }}">
+
+  {% if project.progress == 100 %}
+    <img src="{{ url_for('static', filename='imgs/done.png') }}"
+         alt="Done"
+         class="done-badge">
+  {% elif project.progress == 75 %}
+    <img src="{{ url_for('static', filename='imgs/progress.png') }}"
+         alt="On Progress"
+         class="status-badge">
+          {% elif project.progress == 25 %}
+    <img src="{{ url_for('static', filename='imgs/progress.png') }}"
+         alt="On Progress"
+         class="status-badge">
+  {% endif %}
+</div>
+
             <div class="card-body">
               <h5 class="card-title">{{ project.title }}</h5>
               <p class="card-text">{{ project.short_description }}</p>
