@@ -12240,7 +12240,7 @@ pre .code {
 
 /* Properti lain yang sudah ada */
 .portfolio-card-custom .card-img-top {
-    height: 200px;
+    height: 220px;
     object-fit: cover;
     border-bottom: 1px solid #eee; /* Garis tipis di bawah gambar */
     position: relative; /* Untuk efek overlay gambar */
@@ -12295,6 +12295,7 @@ pre .code {
 .portfolio-card-custom .card-img-top {
     position: relative;
     overflow: hidden;
+    height: 230px;
 }
 .portfolio-card-custom .card-img-top::after {
     content: '';
