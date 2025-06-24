@@ -44,7 +44,6 @@ def get_projects():
 
 @app.route("/")
 def index():
-    # Ambil data dari PostgreSQL
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute("SELECT * FROM projects ORDER BY progress ASC")
@@ -62,9 +61,30 @@ def index():
         .execute()
     )
     blogs = response.data
+
+    # Format tanggal & tambahkan detail_images
     for blog in blogs:
+        # Format tanggal
         if isinstance(blog.get("created_at"), str):
             blog["created_at"] = datetime.fromisoformat(blog["created_at"])
+
+            # Pastikan image_url tidak kosong
+            blog["image_url"] = (
+                blog.get("image_url") or "https://yourdomain.com/placeholder.jpg"
+            )
+
+            # Ambil detail images
+            detail_imgs = (
+                supabase.table("blog_detail_images")
+                .select("image_url")
+                .eq("blog_id", blog["id"])
+                .execute()
+                .data
+            )
+            blog["detail_images"] = [
+                d["image_url"] for d in detail_imgs if d.get("image_url")
+            ]
+
     return render_template("index.html", projects=projects, blogs=blogs)
 
 
@@ -156,40 +176,69 @@ def add_blog_fragment():
         author = request.form["author"]
         description = request.form["description"]
         image = request.files["image"]
+        detail_images = request.files.getlist("detail_images[]")
 
         image_url = None
 
+        # Upload gambar utama
         if image:
             filename = f"{uuid.uuid4()}_{secure_filename(image.filename)}"
             file_bytes = image.read()
-
             upload_response = supabase.storage.from_("gambar").upload(
                 path=f"uploads/{filename}",
                 file=file_bytes,
                 file_options={"content-type": image.mimetype},
             )
-
             if upload_response:
                 image_url = supabase.storage.from_("gambar").get_public_url(
                     f"uploads/{filename}"
                 )
 
-                supabase.table("blog_posts").insert(
-                    {
-                        "title": title,
-                        "author": author,
-                        "description": description,
-                        "image_url": image_url,
-                    }
-                ).execute()
+        # Simpan data blog ke blog_posts
+        insert_response = (
+            supabase.table("blog_posts")
+            .insert(
+                {
+                    "title": title,
+                    "author": author,
+                    "description": description,
+                    "image_url": image_url,
+                }
+            )
+            .execute()
+        )
 
-                return redirect("/cms")
+        # Ambil ID blog hasil insert
+        if insert_response.data:
+            blog_id = insert_response.data[0]["id"]
+
+            # Upload & simpan semua gambar detail
+            for detail_img in detail_images:
+                if detail_img and detail_img.filename:
+                    detail_filename = (
+                        f"{uuid.uuid4()}_{secure_filename(detail_img.filename)}"
+                    )
+                    detail_bytes = detail_img.read()
+                    upload_resp = supabase.storage.from_("gambar").upload(
+                        path=f"uploads/{detail_filename}",
+                        file=detail_bytes,
+                        file_options={"content-type": detail_img.mimetype},
+                    )
+                    if upload_resp:
+                        detail_url = supabase.storage.from_("gambar").get_public_url(
+                            f"uploads/{detail_filename}"
+                        )
+                        supabase.table("blog_detail_images").insert(
+                            {"blog_id": blog_id, "image_url": detail_url}
+                        ).execute()
+
+        return redirect("/cms")
 
     return render_template("add_blog.html")
 
 
-if __name__ == "__main__":
-    app.run(debug=False)
-
 # if __name__ == "__main__":
-#     app.run(host="0.0.0.0", port=5000, debug=True)
+#     app.run(debug=False)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
