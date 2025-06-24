@@ -19,3 +19,61 @@ toggleBtn.addEventListener('click', function() {
         this.dataset.expanded = "true";
     }
 });
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const openButtons = document.querySelectorAll(".open-modal-btn");
+  const closeButtons = document.querySelectorAll(".close-modal-btn");
+
+  openButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const modal = document.getElementById(`modal-${id}`);
+      modal.classList.remove("hidden");
+      startSlider(modal);
+    });
+  });
+
+  closeButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const modal = document.getElementById(`modal-${id}`);
+      modal.classList.add("hidden");
+    });
+  });
+
+  function startSlider(modal) {
+    const slides = modal.querySelectorAll(".slide");
+    const prev = modal.querySelector(".prev-slide");
+    const next = modal.querySelector(".next-slide");
+    let index = 0;
+
+    const showSlide = (i) => {
+      slides.forEach((slide, idx) => {
+        slide.style.opacity = idx === i ? "1" : "0";
+      });
+    };
+
+    showSlide(index);
+
+    const nextHandler = () => {
+      index = (index + 1) % slides.length;
+      showSlide(index);
+    };
+
+    const prevHandler = () => {
+      index = (index - 1 + slides.length) % slides.length;
+      showSlide(index);
+    };
+
+    next.onclick = nextHandler;
+    prev.onclick = prevHandler;
+
+    // auto slide
+    const interval = setInterval(nextHandler, 4000);
+
+    // stop auto slide on close
+    modal.querySelector(".close-modal-btn").addEventListener("click", () => {
+      clearInterval(interval);
+    });
+  }
+});
