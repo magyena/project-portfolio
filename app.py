@@ -46,44 +46,44 @@ def get_projects():
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
+
     cur.execute("SELECT * FROM projects ORDER BY progress ASC")
     project_rows = cur.fetchall()
     project_cols = [desc[0] for desc in cur.description]
     projects = [dict(zip(project_cols, row)) for row in project_rows]
-    cur.close()
-    conn.close()
 
-    response = (
-        supabase.table("blog_posts")
-        .select("*")
-        .order("id", desc=True)
-        .limit(5)
-        .execute()
+    cur.execute("SELECT * FROM blog_posts ORDER BY id DESC LIMIT 5")
+    blog_rows = cur.fetchall()
+    blog_cols = [desc[0] for desc in cur.description]
+    blogs = [dict(zip(blog_cols, row)) for row in blog_rows]
+
+    blog_ids = tuple(blog["id"] for blog in blogs)
+    if len(blog_ids) == 1:
+        blog_ids = (blog_ids[0],)
+
+    cur.execute(
+        "SELECT blog_id, image_url FROM blog_detail_images WHERE blog_id IN %s",
+        (blog_ids,),
     )
-    blogs = response.data
+    detail_images_rows = cur.fetchall()
 
-    # Format tanggal & tambahkan detail_images
+    detail_images_by_blog = {}
+    for blog_id, image_url in detail_images_rows:
+        detail_images_by_blog.setdefault(blog_id, []).append(image_url)
+
     for blog in blogs:
-        # Format tanggal
         if isinstance(blog.get("created_at"), str):
             blog["created_at"] = datetime.fromisoformat(blog["created_at"])
+        elif not isinstance(blog.get("created_at"), datetime):
+            blog["created_at"] = None
 
-            # Pastikan image_url tidak kosong
-            blog["image_url"] = (
-                blog.get("image_url") or "https://yourdomain.com/placeholder.jpg"
-            )
+        blog["image_url"] = (
+            blog.get("image_url") or "https://yourdomain.com/placeholder.jpg"
+        )
+        blog["detail_images"] = detail_images_by_blog.get(blog["id"], [])
 
-            # Ambil detail images
-            detail_imgs = (
-                supabase.table("blog_detail_images")
-                .select("image_url")
-                .eq("blog_id", blog["id"])
-                .execute()
-                .data
-            )
-            blog["detail_images"] = [
-                d["image_url"] for d in detail_imgs if d.get("image_url")
-            ]
+    cur.close()
+    conn.close()
 
     return render_template("index.html", projects=projects, blogs=blogs)
 
