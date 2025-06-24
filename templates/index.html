@@ -311,10 +311,12 @@ class="img-fluid rounded-circle border shadow-sm w-100"
       {% for blog in blogs %}
       <div class="relative z-10 mb-20 flex flex-col md:flex-row {% if loop.index is even %}md:flex-row-reverse{% endif %} items-center justify-between">
 
-        <!-- GARIS CABANG & BULATAN -->
-        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-          <div class="w-6 h-6 bg-white border-4 border-yellow-400 rounded-full"></div>
-        </div>
+       <!-- GARIS CABANG & BULATAN -->
+<div class="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+  <div class="w-6 h-6 bg-white border-4 border-yellow-400 rounded-full"></div>
+</div>
+
+
         {% if loop.index is even %}
         <!-- GARIS HORIZONTAL KANAN -->
         <div class="hidden md:block absolute top-1/2 right-1/2 transform translate-x-[calc(50%+12px)] -translate-y-1/2 w-16">
