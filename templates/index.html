@@ -366,15 +366,17 @@ class="img-fluid rounded-circle border shadow-sm w-100"
       &times;
     </button>
 
-    <!-- Gambar Slider -->
-    <div class="relative h-64 sm:h-96 overflow-hidden">
-      <div class="slide-container relative w-full h-full">
-        {% for img in blog.detail_images %}
-        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-700">
-          <img src="{{ img }}" alt="Slide" class="w-full h-full object-cover rounded-t-2xl">
-        </div>
-        {% endfor %}
-      </div>
+
+  
+<div class="relative h-40 sm:h-96 overflow-hidden">
+  <div class="slide-container relative w-full h-full">
+    {% for img in blog.detail_images %}
+    <div class="slide absolute inset-0 opacity-0 transition-opacity duration-700">
+      <img src="{{ img }}" alt="Slide" class="w-full h-full object-cover rounded-t-2xl">
+    </div>
+    {% endfor %}
+  </div>
+
 
       <!-- Tombol Navigasi -->
       <div class="absolute inset-0 flex justify-between items-center px-4">
