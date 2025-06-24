@@ -8,9 +8,12 @@
     <title>Home - Fatah Alim</title>
     <!-- font icons -->
     <link rel="stylesheet" href="static/vendors/themify-icons/css/themify-icons.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
        <script src="https://cdn.tailwindcss.com"></script>
 	<link rel="stylesheet" href="static/css/styles.css">
+    <style>
+        [x-cloak]{display:none !important}
+    </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
 
@@ -349,7 +352,85 @@ class="img-fluid rounded-circle border shadow-sm w-100"
             </div>
           </div>
           <p class="text-gray-700 text-sm">{{ blog.description | truncate(160) }}</p>
-          <a href="{{ blog.url }}" class="text-purple-600 font-semibold hover:underline">Read more →</a>
+        <div x-data="{ openModal: false }" class="relative">
+  <!-- Tombol Read More -->
+  <button @click="openModal = true" class="text-purple-600 font-semibold hover:underline">Read more →</button>
+
+  <!-- Modal -->
+  <div
+    x-show="openModal"
+    x-transition.opacity
+    x-cloak
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm px-4 py-8"
+    x-data="{
+      slide: 0,
+      images: [
+        '/static/imgs/merak.jpeg',
+        '/static/imgs/vision.jpg',
+        '/static/imgs/merak.jpeg'
+      ],
+      start() {
+        setInterval(() => this.slide = (this.slide + 1) % this.images.length, 4000);
+      }
+    }"
+    x-init="start()"
+    @keydown.escape.window="openModal = false"
+  >
+    <div @click.away="openModal = false" class="relative bg-white rounded-2xl overflow-hidden shadow-2xl w-full max-w-3xl transition-all duration-300 ease-in-out">
+      <!-- Tombol Close -->
+      <button
+        @click="openModal = false"
+        class="absolute top-4 right-4 bg-white text-gray-600 hover:text-red-500 rounded-full w-10 h-10 flex items-center justify-center shadow z-10"
+        title="Close"
+      >
+        &times;
+      </button>
+
+      <!-- Gambar Slider -->
+      <div class="relative h-64 sm:h-96 overflow-hidden">
+        <template x-for="(img, index) in images" :key="index">
+          <div
+            x-show="slide === index"
+            x-transition:enter="transition-opacity duration-700"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition-opacity duration-500"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="absolute inset-0"
+          >
+            <img :src="img" alt="Slide" class="w-full h-full object-cover rounded-t-2xl">
+          </div>
+        </template>
+
+        <!-- Tombol Navigasi -->
+        <div class="absolute inset-0 flex justify-between items-center px-4">
+          <button
+            @click="slide = (slide - 1 + images.length) % images.length"
+            class="bg-white bg-opacity-60 hover:bg-opacity-90 p-2 rounded-full shadow-md text-xl transition"
+            title="Previous"
+          >
+            &#10094;
+          </button>
+          <button
+            @click="slide = (slide + 1) % images.length"
+            class="bg-white bg-opacity-60 hover:bg-opacity-90 p-2 rounded-full shadow-md text-xl transition"
+            title="Next"
+          >
+            &#10095;
+          </button>
+        </div>
+      </div>
+
+      <!-- Konten Blog -->
+      <div class="p-6 space-y-2">
+        <h2 class="text-2xl font-bold text-gray-800">{{ blog.title }}</h2>
+        <p class="text-sm text-gray-500">{{ blog.created_at.strftime('%d %B %Y') }}</p>
+        <p class="text-gray-700 text-base">{{ blog.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>
         </div>
       </div>
       {% endfor %}
