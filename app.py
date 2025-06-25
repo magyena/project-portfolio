@@ -261,8 +261,8 @@ def api_like_blog(blog_id):
         return jsonify({"status": "error", "message": "Blog not found"}), 404
 
 
-# if __name__ == "__main__":
-#     app.run(debug=False)
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=False)
+
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=5000, debug=True)

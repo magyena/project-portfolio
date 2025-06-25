@@ -149,15 +149,26 @@ function closeModal(blogId) {
     }
 }
 
-document.getElementById("like-button").addEventListener("click", function () {
-    const blogId = document.getElementById("like-button").dataset.blogId;
-  fetch(`/api/blog/${blogId}/like`, {
-    method: "POST"
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.status === "success") {
-      document.getElementById("like-count").textContent = data.like_count;
-    }
+document.querySelectorAll(".like-button").forEach(button => {
+  button.addEventListener("click", function () {
+    const blogId = this.dataset.blogId;
+    const countSpan = this.querySelector(".like-count");
+    const heart = this.querySelector(".heart-icon");
+
+    fetch(`/api/blog/${blogId}/like`, {
+      method: "POST"
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        countSpan.textContent = data.like_count;
+
+        // Efek animasi
+        heart.classList.add("scale-150", "opacity-70");
+        setTimeout(() => {
+          heart.classList.remove("scale-150", "opacity-70");
+        }, 200);
+      }
+    });
   });
 });
