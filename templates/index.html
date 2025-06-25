@@ -358,34 +358,63 @@ class="img-fluid rounded-circle border shadow-sm w-100"
   <!-- Tombol Read More -->
 <button class="open-modal-btn text-purple-600 font-semibold hover:underline"
         data-id="{{ loop.index }}">Read more →</button>
-
-<!-- Modal -->
+<!-- Modal Kontainer -->
 <div id="modal-{{ loop.index }}" class="modal hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm px-4 py-8">
   <div class="relative bg-white rounded-2xl overflow-hidden shadow-2xl w-full max-w-3xl">
-    
-    <!-- Tombol Close -->
-    <button class="close-modal-btn absolute top-4 right-4 bg-white text-gray-600 hover:text-red-500 rounded-full w-10 h-10 flex items-center justify-center shadow z-10" data-id="{{ loop.index }}">
+
+    <!-- Tombol X Close Modal -->
+    <button 
+      onclick="closeModal('{{ loop.index }}')" 
+      class="absolute top-4 right-4 z-50 text-white text-3xl bg-black bg-opacity-50 hover:bg-opacity-70 px-3 rounded-full transition"
+      aria-label="Close">
       &times;
     </button>
 
+    <!-- Gambar Slider -->
+    <div class="relative h-40 sm:h-96 overflow-hidden">
+      <div class="slide-container relative w-full h-full">
+        {% for img in blog.detail_images %}
+        <div class="slide absolute inset-0 transition-opacity duration-700 
+                    {% if loop.first %} opacity-100 z-10 {% else %} opacity-0 z-0 {% endif %}">
+          <img 
+            src="{{ img }}" 
+            alt="Slide" 
+            class="w-full h-full object-cover rounded-t-2xl cursor-pointer"
+            onclick="openImageModal('{{ img }}')"
+          >
+        </div>
+        {% endfor %}
+      </div>
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-start justify-center pt-16 px-4">
+  <!-- Container gambar dan tombol X -->
+  <div class="relative">
 
-  
-<div class="relative h-40 sm:h-96 overflow-hidden">
-  <div class="slide-container relative w-full h-full">
-    {% for img in blog.detail_images %}
-    <div class="slide absolute inset-0 opacity-0 transition-opacity duration-700">
-      <img src="{{ img }}" alt="Slide" class="w-full h-full object-cover rounded-t-2xl">
-    </div>
-    {% endfor %}
+    <!-- Tombol Close (X) -->
+    <button 
+      onclick="closeImageModal()" 
+      class="absolute top-3 right-3 text-white text-3xl bg-black bg-opacity-60 p-2 rounded-full hover:bg-opacity-80 transition z-50"
+      aria-label="Close">
+      &times;
+    </button>
+
+    <!-- Gambar -->
+    <img 
+      id="modalImage" 
+      class="mx-auto max-w-full max-h-[80vh] rounded-lg shadow-lg z-40" 
+      src="" 
+      alt="Fullscreen Image"
+    >
   </div>
+</div>
+
 
 
       <!-- Tombol Navigasi -->
-      <div class="absolute inset-0 flex justify-between items-center px-4">
-        <button class="prev-slide bg-white bg-opacity-60 hover:bg-opacity-90 p-2 rounded-full shadow-md text-xl" data-id="{{ loop.index }}">&#10094;</button>
-        <button class="next-slide bg-white bg-opacity-60 hover:bg-opacity-90 p-2 rounded-full shadow-md text-xl" data-id="{{ loop.index }}">&#10095;</button>
-      </div>
-    </div>
+<div class="absolute inset-0 flex justify-between items-center px-4 hidden">
+  <button class="prev-slide ...">&#10094;</button>
+  <button class="next-slide ...">&#10095;</button>
+</div>
+</div>
 
     <!-- Konten Blog -->
     <div class="p-6 space-y-2">

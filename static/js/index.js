@@ -77,3 +77,52 @@ toggleBtn.addEventListener('click', function() {
     });
   }
 });
+
+function openImageModal(src) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    modalImg.src = src;
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+  }
+
+  function closeImageModal() {
+    const modal = document.getElementById("imageModal");
+    modal.classList.remove("flex");
+    modal.classList.add("hidden");
+  }
+
+  // Optional: close modal if user clicks outside the image
+  document.getElementById("imageModal").addEventListener("click", function (e) {
+    if (e.target === this) {
+      closeImageModal();
+    }
+  });
+   let currentSlide = 0;
+  const slides = document.querySelectorAll(".slide");
+
+  setInterval(() => {
+    slides.forEach((s, i) => {
+      s.classList.toggle("opacity-100", i === currentSlide);
+      s.classList.toggle("z-10", i === currentSlide);
+      s.classList.toggle("opacity-0", i !== currentSlide);
+      s.classList.toggle("z-0", i !== currentSlide);
+    });
+
+    currentSlide = (currentSlide + 1) % slides.length;
+  }, 4000);
+
+   function openImageModal(imageSrc) {
+    document.getElementById("modalImage").src = imageSrc;
+    document.getElementById("imageModal").classList.remove("hidden");
+  }
+
+  function closeImageModal() {
+    document.getElementById("imageModal").classList.add("hidden");
+    document.getElementById("modalImage").src = "";
+  }
+
+  function closeModal(index) {
+    const modal = document.getElementById(`modal-${index}`);
+    if (modal) modal.classList.add('hidden');
+  }
