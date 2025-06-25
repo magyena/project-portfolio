@@ -112,17 +112,39 @@ function openImageModal(src) {
     currentSlide = (currentSlide + 1) % slides.length;
   }, 4000);
 
-   function openImageModal(imageSrc) {
-    document.getElementById("modalImage").src = imageSrc;
-    document.getElementById("imageModal").classList.remove("hidden");
+function openImageModal(imageUrl) {
+  const imageModal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  
+  if (imageModal && modalImage) {
+    modalImage.src = imageUrl; // Set the source of the fullscreen image
+    imageModal.classList.remove('hidden'); // Show the modal
   }
+}
 
-  function closeImageModal() {
-    document.getElementById("imageModal").classList.add("hidden");
-    document.getElementById("modalImage").src = "";
+function closeImageModal() {
+  const imageModal = document.getElementById('imageModal');
+  if (imageModal) {
+    imageModal.classList.add('hidden'); 
+    document.getElementById('modalImage').src = ''; 
   }
+}
 
-  function closeModal(index) {
-    const modal = document.getElementById(`modal-${index}`);
-    if (modal) modal.classList.add('hidden');
-  }
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.open-modal-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const blogId = event.target.dataset.id;
+            const modal = document.getElementById(`modal-${blogId}`);
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        });
+    });
+});
+
+function closeModal(blogId) {
+    const modal = document.getElementById(`modal-${blogId}`);
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
