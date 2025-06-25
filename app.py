@@ -237,6 +237,30 @@ def add_blog_fragment():
     return render_template("add_blog.html")
 
 
+@app.route("/api/blog/<int:blog_id>/like", methods=["POST"])
+def api_like_blog(blog_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        """
+        UPDATE blog_posts 
+        SET like_count = COALESCE(like_count, 0) + 1 
+        WHERE id = %s 
+        RETURNING like_count;
+    """,
+        (blog_id,),
+    )
+    result = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    if result:
+        return jsonify({"status": "success", "like_count": result[0]})
+    else:
+        return jsonify({"status": "error", "message": "Blog not found"}), 404
+
+
 # if __name__ == "__main__":
 #     app.run(debug=False)
 

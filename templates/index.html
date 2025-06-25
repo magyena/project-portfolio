@@ -335,10 +335,12 @@ class="img-fluid rounded-circle border shadow-sm w-100"
           <div class="flex justify-between text-sm text-gray-600">
             <div><span class="text-gray-500">Author:</span> <span class="text-blue-700 font-semibold">{{ blog.author }}</span></div>
             <div class="flex space-x-4">
-              <div class="flex items-center space-x-1">
-                <svg class="w-4 h-4 text-red-500" fill="currentColor"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 18.343l-6.828-6.829a4 4 0 010-5.656z"/></svg>
-                <span>16</span>
-              </div>
+              <div id="like-button" data-blog-id="{{blog.id}}" class="flex items-center space-x-1 cursor-pointer p-1">
+  <svg class="w-5 h-5 text-red-500 hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 18.343l-6.828-6.829a4 4 0 010-5.656z"/>
+  </svg>
+  <span id="like-count">{{ blog.like_count or 0 }}</span>
+</div>
               <div class="flex items-center space-x-1">
                 <svg class="w-4 h-4 text-green-600" fill="currentColor"><path d="M18 13a1 1 0 01-1 1H7l-4 4V4a1 1 0 011-1h13a1 1 0 011 1v9z"/></svg>
                 <span>0</span>

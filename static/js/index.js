@@ -148,3 +148,16 @@ function closeModal(blogId) {
         modal.classList.add('hidden');
     }
 }
+
+document.getElementById("like-button").addEventListener("click", function () {
+    const blogId = document.getElementById("like-button").dataset.blogId;
+  fetch(`/api/blog/${blogId}/like`, {
+    method: "POST"
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "success") {
+      document.getElementById("like-count").textContent = data.like_count;
+    }
+  });
+});
