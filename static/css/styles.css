@@ -12403,3 +12403,83 @@ pre .code {
   height: 55px;
   z-index: 10;
 }
+
+/* General styling for the section */
+.section {
+    padding: 6rem 0; /* More vertical padding */
+    background-color: #f9f9f9; /* Soft background */
+}
+
+.section-subtitle {
+    color: #6c757d; /* Muted subtitle color */
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 3rem; /* More space below title */
+}
+
+/* Form specific styling (combining previous snippets) */
+.contact-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px; /* Slightly more rounded */
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Subtle inner shadow */
+}
+
+.form-control::placeholder {
+    color: #999;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15), inset 0 1px 3px rgba(0,0,0,0.05);
+    outline: none;
+}
+
+textarea.form-control {
+    min-height: 150px; /* Ensure textarea is tall enough */
+    resize: vertical; /* Allow vertical resizing */
+}
+
+.btn-primary-solid {
+    background-color: #007bff;
+    color: #fff;
+    border: none; /* No border for solid button */
+    border-radius: 8px;
+    padding: 0.9rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    display: inline-flex; /* For icon alignment */
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary-solid:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.btn-primary-solid i {
+    margin-left: 0.5rem; /* Space between text and icon */
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .form-row > div {
+        margin-bottom: 1rem; /* Adjust spacing for smaller screens */
+    }
+}

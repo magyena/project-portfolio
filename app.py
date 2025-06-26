@@ -1,6 +1,8 @@
 from datetime import datetime
+from email.message import EmailMessage
+import smtplib
 import uuid
-from flask import Flask, redirect, render_template, jsonify, request
+from flask import Flask, flash, redirect, render_template, jsonify, request
 import psycopg2
 import os
 import supabase
@@ -259,6 +261,32 @@ def api_like_blog(blog_id):
         return jsonify({"status": "success", "like_count": result[0]})
     else:
         return jsonify({"status": "error", "message": "Blog not found"}), 404
+
+
+@app.route("/send_email", methods=["POST"])
+def send_email():
+    name = request.form["name"]
+    sender_email = request.form["email"]
+    message_content = request.form["message"]
+
+    msg = EmailMessage()
+    msg["Subject"] = "Pesan Baru dari Website Kontak"
+    msg["From"] = "arrfatah@yahoo.co.id"
+    msg["To"] = "arrfatah@yahoo.co.id"
+    msg.set_content(f"Nama: {name}\nEmail: {sender_email}\n\nPesan:\n{message_content}")
+
+    try:
+        with smtplib.SMTP_SSL("smtp.mail.yahoo.com", 465) as smtp:
+            smtp.login("arrfatah@yahoo.co.id", "vnkntmchupiimfcg")
+            smtp.send_message(msg)
+        return redirect("/thank-you")
+    except Exception as e:
+        return f"Gagal mengirim pesan. Error: {e}"
+
+
+@app.route("/thank-you")
+def thank_you():
+    return render_template("thank_you.html")
 
 
 if __name__ == "__main__":
