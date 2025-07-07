@@ -54,7 +54,7 @@ def index():
     project_cols = [desc[0] for desc in cur.description]
     projects = [dict(zip(project_cols, row)) for row in project_rows]
 
-    cur.execute("SELECT * FROM blog_posts ORDER BY id DESC LIMIT 5")
+    cur.execute("SELECT * FROM blog_posts ORDER BY created_at DESC LIMIT 5")
     blog_rows = cur.fetchall()
     blog_cols = [desc[0] for desc in cur.description]
     blogs = [dict(zip(blog_cols, row)) for row in blog_rows]
