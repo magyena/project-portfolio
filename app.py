@@ -17,7 +17,7 @@ hostname = "aws-0-ap-southeast-1.pooler.supabase.com"
 database = "postgres"
 port = "6543"
 username = "postgres.wznglqsbzzejpfwhesmw"
-password = "M@langPost11"
+password = "mcUtktMNSJXfCKli"
 SUPABASE_URL = "https://wznglqsbzzejpfwhesmw.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind6bmdscXNienplanBmd2hlc213Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczMDE5MDM3NCwiZXhwIjoyMDQ1NzY2Mzc0fQ.WpVubAEG_EQRxuVFp33IlKWtZUDFFIq6tpUliNolG6g"
 
@@ -289,8 +289,8 @@ def thank_you():
     return render_template("thank_you.html")
 
 
-if __name__ == "__main__":
-    app.run(debug=False)
-
 # if __name__ == "__main__":
-#     app.run(host="0.0.0.0", port=5000, debug=True)
+#     app.run(debug=False)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
